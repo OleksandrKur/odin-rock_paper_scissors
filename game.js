@@ -1,5 +1,33 @@
-playGame();
+let playerPoints = 0;
+let computerPoints = 0;
+initializeGame();
 
+let resetButton = document.getElementById("reset");
+resetButton.addEventListener("click", resetGame);
+
+
+function resetGame(){
+    playerPoints = 0;
+    computerPoints = 0;
+    let playerChoiseDisplay = document.getElementById("playerChoise");
+    let computerChoiseDisplay = document.getElementById("computerChoise");
+    let roundResult = document.getElementById("roundResult");
+    let score = document.getElementById("score")
+    let gameResult = document.getElementById("gameResult");
+    playerChoiseDisplay.textContent = ""
+    computerChoiseDisplay.textContent = ""
+    roundResult.textContent = ""
+    score.textContent = ""
+    gameResult.textContent = ""
+}
+
+function initializeGame(){
+    const choiceButtons = document.querySelectorAll(".choise_button");
+    choiceButtons.forEach(button => {
+        button.addEventListener("click", playGame);
+    
+    })
+}
 
 
 //asks user to enter a choise and returns a string that should be either rock or paper or scissors
@@ -21,10 +49,8 @@ function getUserChoise(){
 
 //returns one of rock paper or scissors string
 function getComputerChoise(){
-
-    choises = ["rock", "paper", "scissors"];
+    let choises = ["rock", "paper", "scissors"];
     let random = Math.floor(Math.random() * choises.length);
-
     return choises[random];
 }
 
@@ -35,26 +61,32 @@ function playRound(userChoise, computerChoise){
             case ("rock"):
                 return "Draw!";
             case ("paper"):
+                computerPoints += 1;
                 return "You Lose! Paper beats Rock";
             case ("scissors"):
+                playerPoints += 1;
                 return "You Won! Rock beats Scissors";
         }
     }
     else if(userChoise === "paper"){
         switch (computerChoise) {
             case ("rock"):
+                playerPoints += 1;
                 return "You Won! Paper beats Rock";
             case ("paper"):
                 return "Draw!";
             case ("scissors"):
+                computerPoints += 1;
                 return "You Lose! Scissors beat Paper";
         }
     }
     else if(userChoise === "scissors"){
         switch (computerChoise) {
             case ("rock"):
+                computerPoints += 1;
                 return "You Lose! Rock beats Scissors";
             case ("paper"):
+                playerPoints += 1;
                 return "You Won! Scissors beat Paper";
             case ("scissors"):
                 return "Draw!";
@@ -62,20 +94,35 @@ function playRound(userChoise, computerChoise){
     }
 }
 
-function playGame(){
-    for(let i = 0; i < 5; i++){
-        
-        //get choises
-            //get a computer choise
+function playGame(event){        
+    if (playerPoints < 5 && computerPoints < 5 ){
         let computerChoise = getComputerChoise();
-            //get user choise
-        let userChoise = getUserChoise();
+        let userChoise = event.target.getAttribute('id');
+        printRound(userChoise, computerChoise);
+    }
+    else{
+        printWinner();
+    }
+    
+}
 
-        //print choises
-        console.log(`You choose ${userChoise}`);
-        console.log(`Computer choose ${computerChoise}`);
+function printRound(userSelect, computerSelect){
+    let playerChoiseDisplay = document.getElementById("playerChoise");
+    let computerChoiseDisplay = document.getElementById("computerChoise");
+    let roundResult = document.getElementById("roundResult");
+    playerChoiseDisplay.textContent = `You choose: ${userSelect}`;
+    computerChoiseDisplay.textContent = `Computer choose: ${computerSelect}`;
+    roundResult.textContent = playRound(userSelect, computerSelect);
+    let score = document.getElementById("score")
+    score.textContent = `${playerPoints}:${computerPoints}`;
+}
 
-        //print winner
-        console.log(playRound(userChoise, computerChoise));
+function printWinner(){
+    let gameResult = document.getElementById("gameResult");
+    if (playerPoints == 5){
+        gameResult.textContent = `You won the game!`;
+    }
+    else if (computerPoints == 5){
+        gameResult.textContent = `Computer won the game!`;
     }
 }
