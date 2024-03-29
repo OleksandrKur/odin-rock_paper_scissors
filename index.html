@@ -7,20 +7,24 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Rock Paper Scissors</h1>
-    <div id="choices_wrapper">
-        <button class="choise_button" id="rock">🪨 Rock</button>
-        <button class="choise_button" id="paper">📃 Paper</button>
-        <button class="choise_button" id="scissors">✂️ Scissors</button>
+    <div>
+        <h1>Rock Paper Scissors</h1>
+        <div id="choices_wrapper">
+            <button class="choise_button" id="rock">🪨 Rock</button>
+            <button class="choise_button" id="paper">📃 Paper</button>
+            <button class="choise_button" id="scissors">✂️ Scissors</button>
+        </div>
+        <div id="result_display">
+            <p id="playerChoise"></p>
+            <p id="computerChoise"></p>
+            <p id="roundResult"></p>
+            <p id="score"></p>
+            <p id="gameResult"></p>
+        </div>
     </div>
-    <div id="result_display">
-        <p id="playerChoise">playerChoise</p>
-        <p id="computerChoise">computerChoise</p>
-        <p id="roundResult">roundResult</p>
-        <p id="score">score</p>
-        <p id="gameResult">gameResult</p>
+    <div>
+        <button id="reset">🔄 Reset</button>
     </div>
-    <button id="reset">🔄 Reset</button>
     <script src="game.js"></script>
 </body>
 </html>
